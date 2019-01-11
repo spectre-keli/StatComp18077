@@ -1,0 +1,17 @@
+Package: StatComp18077
+Type: Package
+Title: Plot heart
+Version: 1.0
+Date: 2019-01-10
+Author: Wang keli
+Maintainer: Wang keli <wklzkd@mail.ustc.edu.cn>
+Description: Blessing using R. 
+License: GPL (>= 2)
+Imports: knitr, rmarkdown, grid, ggplot2, stats, graphics, base,
+        mvtnorm, bootstrap, boot, lattice, DAAG, survival, gam,
+        splines, foreach, RANN, energy, Ball, microbenchmark
+RoxygenNote: 6.1.1
+VignetteBuilder: knitr
+URL: http://github.com/spectre-keli/StatComp18077
+BugReports: http://github.com/spectre-keli/StatComp18077/issues
+Encoding: UTF-8

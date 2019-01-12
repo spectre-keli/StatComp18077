@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Wang keli" />
+
+<meta name="date" content="2019-01-12" />
+
+<title>Introduction to StatComp18077</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to StatComp18077</h1>
+<h4 class="author"><em>Wang keli</em></h4>
+<h4 class="date"><em>2019-01-12</em></h4>
+
+
+
+<div id="homework1" class="section level2">
+<h2>homeWork1</h2>
+<div id="example.1" class="section level3">
+<h3>Example.1</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="kw">rnorm</span>(<span class="dv">50</span>)
+x</code></pre></div>
+<pre><code>##  [1] -0.02403471 -0.27706697  0.94193267 -1.79579826 -0.14254669
+##  [6]  1.69417130 -0.39512217 -0.49448350  1.42663000 -0.13788869
+## [11]  1.27268561  0.69195049  0.24895845  0.61361996  0.96338556
+## [16]  1.70368236  0.73548510 -0.01576788  1.42762806 -0.74381632
+## [21] -1.11105243 -1.33709931  2.55596178  0.36818453  1.25138654
+## [26]  0.46191795  0.49743519 -0.52837563 -1.17861406  0.53291972
+## [31] -0.72686787  0.67781553 -0.73009144 -0.06989757 -1.34298159
+## [36]  0.84361048  0.38239081  0.82672102 -0.29104142 -0.07350064
+## [41] -0.29886314 -0.70892447 -0.15008602 -0.03255997  0.03212392
+## [46] -0.66462402 -0.46805079 -1.02951643  1.05473807  0.93456243</code></pre>
+</div>
+<div id="example.2" class="section level3">
+<h3>Example.2</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">name&lt;-<span class="kw">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>)
+age&lt;-<span class="kw">c</span>(<span class="dv">20</span>,<span class="dv">20</span>,<span class="dv">21</span>)
+w&lt;-<span class="kw">c</span>(<span class="dv">120</span>,<span class="dv">130</span>,<span class="dv">125</span>)
+s.info&lt;-<span class="kw">data.frame</span>(<span class="dt">name=</span>name,<span class="dt">age=</span>age,<span class="dt">weight=</span>w)
+knitr<span class="op">::</span><span class="kw">kable</span>(s.info, <span class="dt">format =</span> <span class="st">&quot;markdown&quot;</span>) </code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="right">age</th>
+<th align="right">weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A</td>
+<td align="right">20</td>
+<td align="right">120</td>
+</tr>
+<tr class="even">
+<td align="left">B</td>
+<td align="right">20</td>
+<td align="right">130</td>
+</tr>
+<tr class="odd">
+<td align="left">C</td>
+<td align="right">21</td>
+<td align="right">125</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="example.3" class="section level3">
+<h3>Example.3</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(x,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+</div>
+<div id="homework2" class="section level2">
+<h2>homework2</h2>
+<div id="section" class="section level3">
+<h3>3.5</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">4</span>)) 
+p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.1</span>,<span class="fl">0.2</span>,<span class="fl">0.2</span>,<span class="fl">0.2</span>,<span class="fl">0.3</span>) 
+cp &lt;-<span class="st"> </span><span class="kw">cumsum</span>(p)
+m &lt;-<span class="st"> </span><span class="fl">1e3</span> 
+emp &lt;-<span class="st"> </span><span class="kw">numeric</span>(m) 
+emp &lt;-<span class="st"> </span>x[<span class="kw">findInterval</span>(<span class="kw">runif</span>(m),cp)<span class="op">+</span><span class="dv">1</span>] 
+emp.p &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">table</span>(emp)) 
+the &lt;-<span class="st"> </span><span class="kw">sample</span>(x,<span class="dv">1000</span>,<span class="dt">replace =</span> T,<span class="dt">prob =</span> p)
+the.p &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">table</span>(the)) 
+rft&lt;-<span class="kw">data.frame</span>(<span class="dt">x=</span>x,<span class="dt">emp.p=</span>emp.p<span class="op">/</span><span class="kw">sum</span>(emp.p)<span class="op">/</span>p,<span class="dt">the.p=</span>the.p<span class="op">/</span><span class="kw">sum</span>(the.p)<span class="op">/</span>p)
+knitr<span class="op">::</span><span class="kw">kable</span>(rft, <span class="dt">format =</span> <span class="st">&quot;markdown&quot;</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">x</th>
+<th align="right">emp.p</th>
+<th align="right">the.p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">1.1000000</td>
+<td align="right">0.990</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">1.1150000</td>
+<td align="right">0.950</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">0.9750000</td>
+<td align="right">0.880</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">0.9550000</td>
+<td align="right">1.025</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">0.9366667</td>
+<td align="right">1.100</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="section-1" class="section level3">
+<h3>3.7</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+beta&lt;-<span class="cf">function</span>(x){
+ <span class="op">-</span>(x<span class="op">^</span>(a<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>x)<span class="op">^</span>(b<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="kw">gamma</span>(a<span class="op">+</span>b)<span class="op">/</span><span class="kw">gamma</span>(a)<span class="op">/</span><span class="kw">gamma</span>(b))
+}
+
+my.rbeta&lt;-<span class="cf">function</span>(n,alpha,beta,fn){
+<span class="cf">if</span>(alpha<span class="op">&lt;=</span><span class="dv">1</span><span class="op">||</span>beta<span class="op">&lt;=</span><span class="dv">1</span>){
+<span class="kw">print</span>(<span class="st">&quot;Unreasonable parameters&quot;</span>)
+<span class="cf">break</span> 
+}<span class="cf">else</span>{
+<span class="kw">assign</span>(<span class="st">&quot;a&quot;</span>,alpha,<span class="dt">pos=</span><span class="dv">1</span>)
+<span class="kw">assign</span>(<span class="st">&quot;b&quot;</span>,beta,<span class="dt">pos=</span><span class="dv">1</span>)
+myfit&lt;-<span class="kw">optim</span>(<span class="fl">0.5</span>,fn,<span class="dt">method=</span><span class="st">&quot;L-BFGS-B&quot;</span>,<span class="dt">lower=</span><span class="dv">0</span>,<span class="dt">upper=</span><span class="dv">1</span>)
+c&lt;-<span class="kw">ceiling</span>(<span class="op">-</span>myfit<span class="op">$</span>value)
+j&lt;-k&lt;-<span class="dv">0</span>
+y&lt;-<span class="kw">numeric</span>(n) 
+<span class="cf">while</span>(k <span class="op">&lt;</span><span class="st"> </span>n){ 
+u &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>) 
+j &lt;-<span class="st"> </span>j <span class="op">+</span><span class="st"> </span><span class="dv">1</span> 
+x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)   
+f.cg&lt;-<span class="kw">gamma</span>(alpha<span class="op">+</span>beta)<span class="op">/</span><span class="kw">gamma</span>(alpha)<span class="op">/</span><span class="kw">gamma</span>(beta)<span class="op">*</span>x<span class="op">^</span>(alpha<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>x)<span class="op">^</span>(beta<span class="op">-</span><span class="dv">1</span>)<span class="op">/</span>c    
+<span class="cf">if</span>(f.cg<span class="op">&gt;</span>u){  
+k&lt;-k <span class="op">+</span><span class="st"> </span><span class="dv">1</span> 
+y[k]&lt;-x 
+}
+}
+}
+y
+}
+x&lt;-<span class="kw">my.rbeta</span>(<span class="dv">3000</span>,<span class="dv">3</span>,<span class="dv">2</span>,beta)
+y&lt;-<span class="kw">rbeta</span>(<span class="dv">3000</span>,<span class="dv">3</span>,<span class="dv">2</span>)
+value&lt;-<span class="kw">c</span>(x,y)                
+type&lt;-<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;sample&quot;</span>,<span class="st">&quot;theoretical&quot;</span>),<span class="dt">each=</span><span class="dv">3000</span>)
+plotset&lt;-<span class="kw">data.frame</span>(<span class="dt">x=</span>value,<span class="dt">type=</span>type)
+figure&lt;-<span class="kw">ggplot</span>(plotset,<span class="kw">aes</span>(<span class="dt">x=</span>x,<span class="dt">fill=</span>type,<span class="dt">group=</span>type))<span class="op">+</span>
+<span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..),<span class="dt">stat=</span><span class="st">&quot;bin&quot;</span>,<span class="dt">binwidth=</span><span class="kw">bw.SJ</span>(y,<span class="dt">method=</span><span class="st">&quot;ste&quot;</span>),<span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.04</span>))<span class="op">+</span>
+<span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;x&quot;</span>,<span class="dt">y=</span><span class="st">&quot;density&quot;</span>,<span class="dt">title=</span><span class="st">&quot;Beta(3,2)&quot;</span>)<span class="op">+</span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">14</span>,<span class="dt">hjust =</span> <span class="fl">0.5</span>))
+figure</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="section-2" class="section level3">
+<h3>3.12</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n&lt;-<span class="fl">1e4</span>
+r&lt;-<span class="dv">4</span>
+beta&lt;-<span class="dv">2</span> 
+lambda&lt;-<span class="kw">rgamma</span>(n,r,beta) 
+x&lt;-<span class="kw">rexp</span>(n,lambda) 
+x[<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>]                   ##Only part of the data is shown</code></pre></div>
+<pre><code>##   [1] 0.161843948 0.223452369 0.077493545 0.040388574 0.708143993
+##   [6] 0.148118740 0.064504726 0.403437365 0.527923270 2.005803581
+##  [11] 0.580329636 0.007346640 0.504990090 0.290287121 1.160679231
+##  [16] 1.764374882 0.046066724 0.190159156 0.477407892 0.022992364
+##  [21] 0.078669266 1.175996854 1.947651831 0.202806548 0.117727624
+##  [26] 0.541213038 0.902692457 0.254885377 0.439901639 1.525143680
+##  [31] 0.426174062 0.005586921 0.694357464 0.273633384 0.272965713
+##  [36] 2.431849694 0.244434145 0.171089321 0.199942707 0.274306836
+##  [41] 1.490064583 0.473110470 0.116322543 0.390817184 0.882377118
+##  [46] 0.578719829 0.032646756 1.232974532 0.090906787 0.324442852
+##  [51] 0.425690119 0.626631719 0.118491091 0.931703783 0.351478880
+##  [56] 0.060408236 0.461643460 2.280000393 0.009216806 1.814374219
+##  [61] 0.179783778 0.102702932 1.585572782 1.598671994 0.686831896
+##  [66] 1.154117372 1.297919835 0.417616927 0.431116644 0.143815522
+##  [71] 0.799982657 0.752864448 0.098912091 0.325210025 0.619880833
+##  [76] 0.359439935 0.008364581 0.481991970 1.296021217 1.820148156
+##  [81] 0.366428813 0.327893896 1.975563660 1.076432902 0.239177246
+##  [86] 0.089811110 0.057068493 0.542661271 2.821101574 1.111411464
+##  [91] 0.102648813 0.401234151 0.017227851 0.203285652 0.068229946
+##  [96] 0.115322124 0.317787628 0.478239521 0.879491832 0.985800976</code></pre>
+</div>
+</div>
+<div id="homework3" class="section level2">
+<h2>homework3</h2>
+<div id="section-3" class="section level3">
+<h3>5.4</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MC.pbeta&lt;-<span class="cf">function</span>(x,a,b){
+m &lt;-<span class="st"> </span><span class="fl">1e4</span> 
+u &lt;-<span class="st"> </span><span class="kw">runif</span>(m, <span class="dt">min=</span><span class="dv">0</span>, <span class="dt">max=</span>x)
+g&lt;-<span class="cf">function</span>(u) {<span class="kw">gamma</span>(a<span class="op">+</span>b)<span class="op">/</span><span class="kw">gamma</span>(a)<span class="op">/</span><span class="kw">gamma</span>(b)<span class="op">*</span>u<span class="op">^</span>(a<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>u)<span class="op">^</span>(b<span class="op">-</span><span class="dv">1</span>)}
+theta.hat &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">g</span>(u)) <span class="op">*</span><span class="st"> </span>x
+theta.hat
+}
+p1&lt;-p2&lt;-<span class="kw">numeric</span>(<span class="dv">9</span>)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>){
+p1[i]&lt;-<span class="kw">MC.pbeta</span>(<span class="fl">0.1</span><span class="op">*</span>i,<span class="dv">3</span>,<span class="dv">3</span>)
+p2[i]&lt;-<span class="kw">pbeta</span>(<span class="fl">0.1</span><span class="op">*</span>i,<span class="dv">3</span>,<span class="dv">3</span>)
+}
+res&lt;-<span class="kw">rbind</span>(<span class="dt">MC.p=</span><span class="kw">round</span>(p1,<span class="dv">3</span>), <span class="dt">pbeta.p=</span><span class="kw">round</span>(p2,<span class="dv">3</span>))
+<span class="kw">colnames</span>(res) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">'x='</span>,<span class="kw">seq</span>(<span class="fl">0.1</span>,<span class="fl">0.9</span>,<span class="dt">by=</span><span class="fl">0.1</span>))
+knitr<span class="op">::</span><span class="kw">kable</span>(res, <span class="dt">format =</span> <span class="st">&quot;markdown&quot;</span>,<span class="dt">align=</span><span class="st">&quot;c&quot;</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">x=0.1</th>
+<th align="center">x=0.2</th>
+<th align="center">x=0.3</th>
+<th align="center">x=0.4</th>
+<th align="center">x=0.5</th>
+<th align="center">x=0.6</th>
+<th align="center">x=0.7</th>
+<th align="center">x=0.8</th>
+<th align="center">x=0.9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">MC.p</td>
+<td align="center">0.009</td>
+<td align="center">0.057</td>
+<td align="center">0.164</td>
+<td align="center">0.318</td>
+<td align="center">0.496</td>
+<td align="center">0.680</td>
+<td align="center">0.837</td>
+<td align="center">0.945</td>
+<td align="center">0.989</td>
+</tr>
+<tr class="even">
+<td align="left">pbeta.p</td>
+<td align="center">0.009</td>
+<td align="center">0.058</td>
+<td align="center">0.163</td>
+<td align="center">0.317</td>
+<td align="center">0.500</td>
+<td align="center">0.683</td>
+<td align="center">0.837</td>
+<td align="center">0.942</td>
+<td align="center">0.991</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="section-4" class="section level3">
+<h3>5.9</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MC.Ray&lt;-<span class="cf">function</span>(num,sigma,<span class="dt">antithetic =</span> <span class="ot">TRUE</span>){
+u&lt;-<span class="kw">runif</span>(num)
+<span class="cf">if</span>(<span class="op">!</span>antithetic) v&lt;-<span class="kw">runif</span>(num) <span class="cf">else</span> v&lt;-<span class="dv">1</span><span class="op">-</span>u
+u&lt;-<span class="kw">c</span>(u,v)
+x&lt;-<span class="kw">numeric</span>(num<span class="op">*</span><span class="dv">2</span>)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>num){
+x[i]&lt;-<span class="kw">sqrt</span>(<span class="op">-</span><span class="dv">2</span><span class="op">*</span>sigma<span class="op">^</span><span class="dv">2</span><span class="op">*</span><span class="kw">log</span>(<span class="dv">1</span><span class="op">-</span>u[i]))
+x[i<span class="op">+</span>num]&lt;-<span class="kw">sqrt</span>(<span class="op">-</span><span class="dv">2</span><span class="op">*</span>sigma<span class="op">^</span><span class="dv">2</span><span class="op">*</span><span class="kw">log</span>(<span class="dv">1</span><span class="op">-</span>u[i<span class="op">+</span>num]))
+}
+x
+}
+m&lt;-<span class="dv">1000</span>
+sigma&lt;-<span class="dv">1</span>                                      <span class="co">#sigma???趨Ϊ1</span>
+MC1&lt;-<span class="kw">MC.Ray</span>(m,sigma,<span class="dt">antithetic=</span><span class="ot">FALSE</span>)
+MC2&lt;-<span class="kw">MC.Ray</span>(m,sigma)
+percent&lt;-(<span class="kw">var</span>((MC1[(<span class="dv">1</span><span class="op">+</span>m)<span class="op">:</span>(m<span class="op">+</span>m)]<span class="op">+</span>MC1[<span class="dv">1</span><span class="op">:</span>m])<span class="op">/</span><span class="dv">2</span>)<span class="op">-</span><span class="kw">var</span>((MC2[(<span class="dv">1</span><span class="op">+</span>m)<span class="op">:</span>(m<span class="op">+</span>m)]<span class="op">+</span>MC2[<span class="dv">1</span><span class="op">:</span>m])<span class="op">/</span><span class="dv">2</span>))<span class="op">/</span>
+<span class="kw">var</span>((MC1[(<span class="dv">1</span><span class="op">+</span>m)<span class="op">:</span>(m<span class="op">+</span>m)]<span class="op">+</span>MC1[<span class="dv">1</span><span class="op">:</span>m])<span class="op">/</span><span class="dv">2</span>)
+<span class="kw">print</span>(<span class="kw">sprintf</span>(<span class="st">&quot;the percent reduction in variance is %f&quot;</span>,percent))</code></pre></div>
+<pre><code>## [1] &quot;the percent reduction in variance is 0.945613&quot;</code></pre>
+</div>
+<div id="section-5" class="section level3">
+<h3>5.13</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m&lt;-<span class="fl">1e4</span>
+theta.hat&lt;-se&lt;-<span class="kw">numeric</span>(<span class="dv">2</span>)
+g&lt;-<span class="cf">function</span>(x){
+x<span class="op">^</span><span class="dv">2</span><span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>x<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sqrt</span>(<span class="dv">2</span><span class="op">*</span>pi)<span class="op">*</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)
+}
+x&lt;-<span class="kw">rnorm</span>(m)   <span class="co">#using f1</span>
+fg&lt;-<span class="kw">g</span>(x)<span class="op">/</span>(<span class="kw">exp</span>(<span class="op">-</span>x<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sqrt</span>(<span class="dv">2</span><span class="op">*</span>pi))
+theta.hat[<span class="dv">1</span>]&lt;-<span class="kw">mean</span>(fg)
+se[<span class="dv">1</span>]&lt;-<span class="kw">sd</span>(fg)
+x&lt;-<span class="kw">rexp</span>(m,<span class="dt">rate=</span><span class="fl">0.5</span>) <span class="co">#using f2</span>
+fg&lt;-<span class="kw">g</span>(x)<span class="op">/</span>(<span class="kw">exp</span>(<span class="op">-</span>x<span class="op">/</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span>)
+theta.hat[<span class="dv">2</span>]&lt;-<span class="kw">mean</span>(fg)
+se[<span class="dv">2</span>]&lt;-<span class="kw">sd</span>(fg)
+res&lt;-<span class="kw">rbind</span>(<span class="dt">theta=</span><span class="kw">round</span>(theta.hat,<span class="dv">3</span>), <span class="dt">se=</span><span class="kw">round</span>(se,<span class="dv">3</span>))
+<span class="kw">colnames</span>(res)&lt;-<span class="kw">paste0</span>(<span class="st">'f'</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</code></pre></div>
+<p><span class="math display">\[f1=\frac1{\sqrt{2\pi}}e^{-x^2/2}, \qquad f2=\frac12e^{-x/2}\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(res, <span class="dt">format =</span> <span class="st">&quot;markdown&quot;</span>,<span class="dt">align=</span><span class="st">&quot;c&quot;</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">f1</th>
+<th align="center">f2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">theta</td>
+<td align="center">0.426</td>
+<td align="center">0.402</td>
+</tr>
+<tr class="even">
+<td align="left">se</td>
+<td align="center">1.202</td>
+<td align="center">0.504</td>
+</tr>
+</tbody>
+</table>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="section-6" class="section level3">
+<h3>5.13</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m&lt;-<span class="fl">1e4</span>
+g&lt;-<span class="cf">function</span>(x){
+x<span class="op">^</span><span class="dv">2</span><span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>x<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sqrt</span>(<span class="dv">2</span><span class="op">*</span>pi)<span class="op">*</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)
+}
+x&lt;-<span class="kw">rexp</span>(m,<span class="dt">rate=</span><span class="fl">0.5</span>) <span class="co">#using f2</span>
+fg&lt;-<span class="kw">g</span>(x)<span class="op">/</span>(<span class="kw">exp</span>(<span class="op">-</span>x<span class="op">/</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span>)
+theta.hat1&lt;-<span class="kw">mean</span>(fg)
+<span class="kw">print</span>(<span class="kw">sprintf</span>(<span class="st">&quot;the Monte Carlo estimate of integral value is %f&quot;</span>,theta.hat1))</code></pre></div>
+<pre><code>## [1] &quot;the Monte Carlo estimate of integral value is 0.402087&quot;</code></pre>
+</div>
+</div>
+<div id="homework4" class="section level2">
+<h2>homework4</h2>
+<div id="section-7" class="section level3">
+<h3>6.9</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+G.estimate&lt;-<span class="cf">function</span>(n,dist){             ##estimate the G
+<span class="cf">if</span>(dist<span class="op">==</span><span class="st">&quot;sl&quot;</span>){               
+diffmethod&lt;-<span class="kw">paste</span>(<span class="st">&quot;r&quot;</span>,<span class="st">&quot;lnorm&quot;</span>,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+}<span class="cf">else</span> <span class="cf">if</span>(dist<span class="op">==</span><span class="st">&quot;unif&quot;</span>){       
+diffmethod&lt;-<span class="kw">paste</span>(<span class="st">&quot;r&quot;</span>,<span class="st">&quot;unif&quot;</span>,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+}<span class="cf">else</span> <span class="cf">if</span>(dist<span class="op">==</span><span class="st">&quot;bin&quot;</span>){         
+diffmethod&lt;-<span class="kw">paste</span>(<span class="st">&quot;r&quot;</span>,<span class="st">&quot;binom&quot;</span>,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+}<span class="cf">else</span>{
+<span class="kw">stop</span>(<span class="st">&quot;error in your distribution&quot;</span>)
+}
+<span class="cf">if</span>(dist<span class="op">!=</span><span class="st">&quot;bin&quot;</span>){  
+x&lt;-<span class="kw">sort</span>(<span class="kw">mapply</span>(diffmethod,n))
+}<span class="cf">else</span>{
+x&lt;-<span class="kw">sort</span>(<span class="kw">mapply</span>(diffmethod,n,<span class="dv">1</span>,<span class="fl">0.1</span>))  
+}
+mu=<span class="kw">mean</span>(x)
+G.hat&lt;-<span class="kw">sum</span>(<span class="kw">sapply</span>(<span class="kw">seq</span>(<span class="dv">1</span>,n),<span class="cf">function</span>(i){(<span class="dv">2</span><span class="op">*</span>i<span class="op">-</span>n<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>x[i]}))<span class="op">/</span>mu<span class="op">/</span>n<span class="op">^</span><span class="dv">2</span>
+G.hat
+}  
+dfplot&lt;-<span class="cf">function</span>(x){                      ##construct density histograms                                      
+plotset&lt;-<span class="kw">data.frame</span>(<span class="dt">Gini=</span>x)                           
+<span class="kw">ggplot</span>(plotset,<span class="kw">aes</span>(<span class="dt">x=</span>Gini))<span class="op">+</span>
+<span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..),<span class="dt">stat=</span><span class="st">&quot;bin&quot;</span>,<span class="dt">binwidth=</span><span class="kw">bw.SJ</span>(x,<span class="dt">method=</span><span class="st">&quot;ste&quot;</span>),<span class="dt">fill=</span><span class="st">&quot;#FF9999&quot;</span>)<span class="op">+</span>
+<span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;density&quot;</span>)<span class="op">+</span><span class="kw">theme</span>(<span class="dt">plot.title=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">14</span>,<span class="dt">hjust =</span> <span class="fl">0.5</span>))
+}
+
+G.sl&lt;-<span class="kw">sapply</span>(<span class="kw">seq</span>(<span class="dv">1</span>,<span class="fl">1e4</span>),<span class="cf">function</span>(ol){<span class="kw">G.estimate</span>(<span class="dv">1000</span>,<span class="st">&quot;sl&quot;</span>)})       ##sl:standard lognormal
+res&lt;-<span class="kw">data.frame</span>(<span class="dt">mean=</span><span class="kw">mean</span>(G.sl),<span class="dt">median=</span><span class="kw">median</span>(G.sl),<span class="dt">deciles=</span><span class="kw">as.numeric</span>(<span class="kw">quantile</span>(G.sl,<span class="fl">0.1</span>)))
+knitr<span class="op">::</span><span class="kw">kable</span>(res, <span class="dt">format =</span> <span class="st">&quot;markdown&quot;</span>,<span class="dt">align=</span><span class="st">&quot;c&quot;</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="center">mean</th>
+<th align="center">median</th>
+<th align="center">deciles</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">0.5197118</td>
+<td align="center">0.5194252</td>
+<td align="center">0.5024946</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dfplot</span>(G.sl)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">G.unif&lt;-<span class="kw">sapply</span>(<span class="kw">seq</span>(<span class="dv">1</span>,<span class="fl">1e4</span>),<span class="cf">function</span>(ol){<span class="kw">G.estimate</span>(<span class="dv">1000</span>,<span class="st">&quot;unif&quot;</span>)})   ##unif:uniform distribution 
+res&lt;-<span class="kw">data.frame</span>(<span class="dt">mean=</span><span class="kw">mean</span>(G.unif),<span class="dt">median=</span><span class="kw">median</span>(G.unif),<span class="dt">deciles=</span><span class="kw">as.numeric</span>(<span class="kw">quantile</span>(G.unif,<span class="fl">0.1</span>)))
+knitr<span class="op">::</span><span class="kw">kable</span>(res, <span class="dt">format =</span> <span class="st">&quot;markdown&quot;</span>,<span class="dt">align=</span><span class="st">&quot;c&quot;</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="center">mean</th>
+<th align="center">median</th>
+<th align="center">deciles</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">0.3331726</td>
+<td align="center">0.3330254</td>
+<td align="center">0.3234883</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dfplot</span>(G.unif)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">G.bin&lt;-<span class="kw">sapply</span>(<span class="kw">seq</span>(<span class="dv">1</span>,<span class="fl">1e4</span>),<span class="cf">function</span>(ol){<span class="kw">G.estimate</span>(<span class="dv">1000</span>,<span class="st">&quot;bin&quot;</span>)})    ##bin:Bernoulli 
+res&lt;-<span class="kw">data.frame</span>(<span class="dt">mean=</span><span class="kw">mean</span>(G.bin),<span class="dt">median=</span><span class="kw">median</span>(G.bin),<span class="dt">deciles=</span><span class="kw">as.numeric</span>(<span class="kw">quantile</span>(G.bin,<span class="fl">0.1</span>)))
+knitr<span class="op">::</span><span class="kw">kable</span>(res, <span class="dt">format =</span> <span class="st">&quot;markdown&quot;</span>,<span class="dt">align=</span><span class="st">&quot;c&quot;</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="center">mean</th>
+<th align="center">median</th>
+<th align="center">deciles</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">0.8999412</td>
+<td align="center">0.9</td>
+<td align="center">0.888</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dfplot</span>(G.bin)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --> ### 6.10</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">G.estimate&lt;-<span class="cf">function</span>(n,a,b){
+x&lt;-<span class="kw">rlnorm</span>(n,a,b)
+mu=<span class="kw">mean</span>(x)
+G.hat&lt;-<span class="kw">sum</span>(<span class="kw">sapply</span>(<span class="kw">seq</span>(<span class="dv">1</span>,n),<span class="cf">function</span>(i){(<span class="dv">2</span><span class="op">*</span>i<span class="op">-</span>n<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>x[i]}))<span class="op">/</span>mu<span class="op">/</span>n<span class="op">^</span><span class="dv">2</span>
+G.hat
+}
+G.sl&lt;-<span class="kw">sapply</span>(<span class="kw">seq</span>(<span class="dv">1</span>,<span class="fl">1e4</span>),<span class="cf">function</span>(ol){<span class="kw">G.estimate</span>(<span class="fl">1e3</span>,<span class="dv">1</span>,<span class="dv">4</span>)})        ##lognormal(1,4)
+CI&lt;-<span class="kw">c</span>(<span class="kw">mean</span>(G.sl)<span class="op">-</span><span class="kw">qt</span>(<span class="fl">0.975</span>,<span class="fl">1e4</span><span class="op">-</span><span class="dv">2</span>)<span class="op">*</span><span class="kw">sd</span>(G.sl),<span class="kw">mean</span>(G.sl)<span class="op">+</span><span class="kw">qt</span>(<span class="fl">0.975</span>,<span class="fl">1e4</span><span class="op">-</span><span class="dv">2</span>)<span class="op">*</span><span class="kw">sd</span>(G.sl))
+<span class="kw">mean</span>(G.sl<span class="op">&gt;=</span>CI[<span class="dv">1</span>]<span class="op">&amp;</span>G.sl<span class="op">&lt;=</span>CI[<span class="dv">2</span>])</code></pre></div>
+<pre><code>## [1] 0.9421</code></pre>
+</div>
+<div id="b" class="section level3">
+<h3>6.B</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mvtnorm)
+power.test&lt;-<span class="cf">function</span>(method,cor){
+n1&lt;-<span class="dv">500</span>
+n2&lt;-<span class="fl">1e4</span>
+mean&lt;-<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)
+sigma&lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,cor,cor,<span class="dv">1</span>),<span class="dt">nrow=</span><span class="dv">2</span>)
+p&lt;-<span class="kw">mean</span>(<span class="kw">replicate</span>(n2,<span class="dt">expr=</span>{
+x&lt;-<span class="kw">rmvnorm</span>(n1,mean,sigma)
+<span class="kw">cor.test</span>(x[,<span class="dv">1</span>],x[,<span class="dv">2</span>],<span class="dt">method=</span>method)<span class="op">$</span>p.value<span class="op">&lt;=</span><span class="fl">0.05</span>
+}))
+p
+}
+test.alter&lt;-<span class="cf">function</span>(method){             ##(X,Y)~(X,v*X),  X~N(0,1),P(V=1)=P(V=-1)=0.5
+n1&lt;-<span class="dv">500</span>
+n2&lt;-<span class="fl">1e4</span>
+p&lt;-<span class="kw">mean</span>(<span class="kw">replicate</span>(n2,<span class="dt">expr=</span>{
+x&lt;-<span class="kw">rnorm</span>(n1)
+a&lt;-<span class="kw">rbinom</span>(n1,<span class="dv">1</span>,<span class="fl">0.5</span>)
+v&lt;-<span class="dv">2</span><span class="op">*</span>a<span class="op">-</span><span class="dv">1</span>
+y&lt;-<span class="kw">data.frame</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>v<span class="op">*</span>x)
+<span class="kw">cor.test</span>(y[,<span class="dv">1</span>],y[,<span class="dv">2</span>],<span class="dt">method=</span><span class="st">&quot;pearson&quot;</span>)<span class="op">$</span>p.value<span class="op">&lt;=</span><span class="fl">0.05</span>
+}))
+p
+}
+power1&lt;-<span class="kw">data.frame</span>(<span class="dt">method=</span><span class="kw">c</span>(<span class="st">&quot;pearson&quot;</span>,<span class="st">&quot;kendall&quot;</span>,<span class="st">&quot;spearman&quot;</span>),<span class="dt">power=</span><span class="kw">c</span>(<span class="kw">power.test</span>(<span class="st">&quot;pearson&quot;</span>,<span class="fl">0.1</span>),<span class="kw">power.test</span>(<span class="st">&quot;kendall&quot;</span>,<span class="fl">0.1</span>),<span class="kw">power.test</span>(<span class="st">&quot;spearman&quot;</span>,<span class="fl">0.1</span>)))
+knitr<span class="op">::</span><span class="kw">kable</span>(power1,<span class="dt">format=</span><span class="st">&quot;markdown&quot;</span>,<span class="dt">align=</span><span class="st">&quot;c&quot;</span>)     ##bivariate normal</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="center">method</th>
+<th align="center">power</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">pearson</td>
+<td align="center">0.6067</td>
+</tr>
+<tr class="even">
+<td align="center">kendall</td>
+<td align="center">0.5717</td>
+</tr>
+<tr class="odd">
+<td align="center">spearman</td>
+<td align="center">0.5642</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">power2&lt;-<span class="kw">data.frame</span>(<span class="dt">method=</span><span class="kw">c</span>(<span class="st">&quot;pearson&quot;</span>,<span class="st">&quot;kendall&quot;</span>,<span class="st">&quot;spearman&quot;</span>),<span class="dt">power=</span><span class="kw">c</span>(<span class="kw">test.alter</span>(<span class="st">&quot;pearson&quot;</span>),<span class="kw">test.alter</span>(<span class="st">&quot;kendall&quot;</span>),<span class="kw">test.alter</span>(<span class="st">&quot;spearman&quot;</span>)))
+knitr<span class="op">::</span><span class="kw">kable</span>(power2,<span class="dt">format=</span><span class="st">&quot;markdown&quot;</span>,<span class="dt">align=</span><span class="st">&quot;c&quot;</span>)     ##alternative</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="center">method</th>
+<th align="center">power</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">pearson</td>
+<td align="center">0.2626</td>
+</tr>
+<tr class="even">
+<td align="center">kendall</td>
+<td align="center">0.2548</td>
+</tr>
+<tr class="odd">
+<td align="center">spearman</td>
+<td align="center">0.2552</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="homework5" class="section level2">
+<h2>homework5</h2>
+<pre><code>## 
+## 载入程辑包：'lattice'</code></pre>
+<pre><code>## The following object is masked from 'package:boot':
+## 
+##     melanoma</code></pre>
+<div id="section-8" class="section level3">
+<h3>7.1</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n&lt;-<span class="kw">nrow</span>(law)
+b.cor&lt;-<span class="cf">function</span>(x,i){
+<span class="kw">cor</span>(x[i,<span class="dv">1</span>],x[i,<span class="dv">2</span>])
+}
+theta.hat&lt;-<span class="kw">b.cor</span>(law,<span class="dv">1</span><span class="op">:</span>n)
+theta.jack&lt;-<span class="kw">numeric</span>(n)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){
+theta.jack[i]&lt;-<span class="kw">b.cor</span>(law,(<span class="dv">1</span><span class="op">:</span>n)[<span class="op">-</span>i])
+}
+bias.jack&lt;-(n<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>(<span class="kw">mean</span>(theta.jack)<span class="op">-</span>theta.hat)
+se.jack&lt;-<span class="kw">sqrt</span>((n<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="kw">mean</span>((theta.jack<span class="op">-</span>theta.hat)<span class="op">^</span><span class="dv">2</span>))
+<span class="kw">round</span>(<span class="kw">c</span>(<span class="dt">original=</span>theta.hat,<span class="dt">bias=</span>bias.jack,<span class="dt">se=</span>se.jack),<span class="dv">3</span>)</code></pre></div>
+<pre><code>## original     bias       se 
+##    0.776   -0.006    0.143</code></pre>
+</div>
+<div id="section-9" class="section level3">
+<h3>7.5</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m&lt;-<span class="fl">1e3</span>
+boot.mean&lt;-<span class="cf">function</span>(x,i) <span class="kw">mean</span>(x[,<span class="dv">1</span>][i])
+de&lt;-<span class="kw">boot</span>(<span class="dt">data=</span>aircondit,<span class="dt">statistic=</span>boot.mean,<span class="dt">R=</span>m)
+ci&lt;-<span class="kw">boot.ci</span>(de,<span class="dt">type=</span><span class="kw">c</span>(<span class="st">&quot;norm&quot;</span>,<span class="st">&quot;basic&quot;</span>,<span class="st">&quot;perc&quot;</span>,<span class="st">&quot;bca&quot;</span>))
+<span class="kw">cat</span>(<span class="st">' norm.ci:'</span>,ci<span class="op">$</span>norm[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>],<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>,
+    <span class="st">'basic.ci:'</span>,ci<span class="op">$</span>basic[<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>],<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>,
+    <span class="st">'perc.ci:'</span>,ci<span class="op">$</span>percent[<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>],<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>,
+    <span class="st">'BCa.ci:'</span>,ci<span class="op">$</span>bca[<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>],<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>,<span class="st">&quot;Because they use the quantiles of different distributions.&quot;</span>)</code></pre></div>
+<pre><code>##  norm.ci: 31.69677 181.7829 
+##  basic.ci: 25.75212 170.8997 
+##  perc.ci: 45.26694 190.4145 
+##  BCa.ci: 53.32346 214.6142 
+##  Because they use the quantiles of different distributions.</code></pre>
+</div>
+<div id="section-10" class="section level3">
+<h3>7.8</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n&lt;-<span class="kw">nrow</span>(scor)
+theta.jack&lt;-<span class="kw">numeric</span>(n)
+sigma.hat&lt;-<span class="kw">cov</span>(scor)
+lambda.hat&lt;-<span class="kw">eigen</span>(sigma.hat)<span class="op">$</span>values       <span class="co">#the default is descending</span>
+theta.hat&lt;-lambda.hat[<span class="dv">1</span>]<span class="op">/</span><span class="kw">sum</span>(lambda.hat)
+j.theta&lt;-<span class="cf">function</span>(x,i){
+j.l&lt;-<span class="kw">eigen</span>(<span class="kw">cov</span>(x[<span class="op">-</span>i,]))<span class="op">$</span>values
+j.t&lt;-j.l[<span class="dv">1</span>]<span class="op">/</span><span class="kw">sum</span>(j.l)
+}
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){
+theta.jack[i]&lt;-<span class="kw">j.theta</span>(scor,i)
+}
+bias.jack&lt;-(n<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>(<span class="kw">mean</span>(theta.jack)<span class="op">-</span>theta.hat)
+se.jack&lt;-<span class="kw">sqrt</span>((n<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="kw">mean</span>((theta.jack<span class="op">-</span>theta.hat)<span class="op">^</span><span class="dv">2</span>))
+<span class="kw">round</span>(<span class="kw">c</span>(<span class="dt">original=</span>theta.hat,<span class="dt">bias=</span>bias.jack,<span class="dt">se=</span>se.jack),<span class="dv">3</span>)</code></pre></div>
+<pre><code>## original     bias       se 
+##    0.619    0.001    0.050</code></pre>
+</div>
+<div id="section-11" class="section level3">
+<h3>7.11</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">attach</span>(ironslag)        <span class="co">#in DAAG ironslag</span>
+n&lt;-<span class="kw">length</span>(magnetic)     <span class="co"># for n-fold cross validation</span>
+cb&lt;-<span class="kw">t</span>(<span class="kw">combn</span>(n,<span class="dv">2</span>))       <span class="co"># fit models on leave-two-out samples</span>
+e1&lt;-e2&lt;-e3&lt;-e4&lt;-<span class="kw">matrix</span>(<span class="ot">NA</span>,<span class="kw">nrow</span>(cb),<span class="dv">2</span>) 
+<span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(cb)) {
+y&lt;-magnetic[<span class="op">-</span>cb[k,]]
+x&lt;-chemical[<span class="op">-</span>cb[k,]]
+
+J1&lt;-<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x)
+yhat1&lt;-J1<span class="op">$</span>coef[<span class="dv">1</span>]<span class="op">+</span>J1<span class="op">$</span>coef[<span class="dv">2</span>]<span class="op">*</span>chemical[cb[k,]]
+e1[k,]&lt;-magnetic[cb[k,]]<span class="op">-</span>yhat1
+
+J2&lt;-<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>))
+yhat2&lt;-J2<span class="op">$</span>coef[<span class="dv">1</span>]<span class="op">+</span>J2<span class="op">$</span>coef[<span class="dv">2</span>]<span class="op">*</span>chemical[cb[k,]] <span class="op">+</span>J2<span class="op">$</span>coef[<span class="dv">3</span>]<span class="op">*</span>chemical[cb[k,]]<span class="op">^</span><span class="dv">2</span>
+e2[k,]&lt;-magnetic[cb[k,]]<span class="op">-</span>yhat2
+
+J3&lt;-<span class="kw">lm</span>(<span class="kw">log</span>(y) <span class="op">~</span><span class="st"> </span>x)
+logyhat3&lt;-J3<span class="op">$</span>coef[<span class="dv">1</span>]<span class="op">+</span>J3<span class="op">$</span>coef[<span class="dv">2</span>]<span class="op">*</span>chemical[cb[k,]]
+yhat3&lt;-<span class="kw">exp</span>(logyhat3)
+e3[k,]&lt;-magnetic[cb[k,]]<span class="op">-</span>yhat3
+
+J4&lt;-<span class="kw">lm</span>(<span class="kw">log</span>(y) <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(x))
+logyhat4&lt;-J4<span class="op">$</span>coef[<span class="dv">1</span>]<span class="op">+</span>J4<span class="op">$</span>coef[<span class="dv">2</span>]<span class="op">*</span><span class="kw">log</span>(chemical[cb[k,]])
+yhat4&lt;-<span class="kw">exp</span>(logyhat4)
+e4[k,]&lt;-magnetic[cb[k,]]<span class="op">-</span>yhat4
+}
+
+<span class="kw">c</span>(<span class="kw">mean</span>(e1<span class="op">^</span><span class="dv">2</span>), <span class="kw">mean</span>(e2<span class="op">^</span><span class="dv">2</span>), <span class="kw">mean</span>(e3<span class="op">^</span><span class="dv">2</span>), <span class="kw">mean</span>(e4<span class="op">^</span><span class="dv">2</span>))</code></pre></div>
+<pre><code>## [1] 19.57227 17.87018 18.45491 20.46718</code></pre>
+<pre><code>## [1] &quot;Model 2 is best.&quot;</code></pre>
+</div>
+</div>
+<div id="homework6" class="section level2">
+<h2>homework6</h2>
+<pre><code>## Warning: 程辑包'survival'是用R版本3.5.2 来建造的</code></pre>
+<pre><code>## 
+## 载入程辑包：'survival'</code></pre>
+<pre><code>## The following object is masked from 'package:DAAG':
+## 
+##     lung</code></pre>
+<pre><code>## The following object is masked from 'package:boot':
+## 
+##     aml</code></pre>
+<pre><code>## 载入需要的程辑包：splines</code></pre>
+<pre><code>## 载入需要的程辑包：foreach</code></pre>
+<pre><code>## Loaded gam 1.16</code></pre>
+<pre><code>## Warning: 程辑包'Ball'是用R版本3.5.2 来建造的</code></pre>
+<div id="section-12" class="section level3">
+<h3>8.1</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvm.test&lt;-<span class="cf">function</span>(x,y){
+F&lt;-<span class="kw">ecdf</span>(x);G&lt;-<span class="kw">ecdf</span>(y)
+n&lt;-<span class="kw">length</span>(x);m&lt;-<span class="kw">length</span>(y)
+w2&lt;-m<span class="op">*</span>n<span class="op">/</span>(m<span class="op">+</span>n)<span class="op">^</span><span class="dv">2</span><span class="op">*</span>(<span class="kw">sum</span>((<span class="kw">F</span>(x)<span class="op">-</span><span class="kw">G</span>(x))<span class="op">^</span><span class="dv">2</span>)<span class="op">+</span><span class="kw">sum</span>((<span class="kw">F</span>(y)<span class="op">-</span><span class="kw">G</span>(y))<span class="op">^</span><span class="dv">2</span>))
+w2
+}
+<span class="kw">attach</span>(chickwts)                    
+x &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">as.vector</span>(chickwts[chickwts[,<span class="dv">2</span>]<span class="op">==</span><span class="st">&quot;soybean&quot;</span>,<span class="dv">1</span>]))
+y &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">as.vector</span>(chickwts[chickwts[,<span class="dv">2</span>]<span class="op">==</span><span class="st">&quot;linseed&quot;</span>,<span class="dv">1</span>]))
+<span class="kw">detach</span>(chickwts)
+R&lt;-<span class="dv">999</span>;z&lt;-<span class="kw">c</span>(x,y);K&lt;-<span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">26</span>);n&lt;-<span class="kw">length</span>(x);<span class="kw">set.seed</span>(<span class="dv">12345</span>)
+reps&lt;-<span class="kw">numeric</span>(R);t0&lt;-<span class="kw">cvm.test</span>(x,y)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>R){
+k&lt;-<span class="kw">sample</span>(K,<span class="dt">size=</span>n,<span class="dt">replace=</span><span class="ot">FALSE</span>)
+x1&lt;-z[k];y1&lt;-z[<span class="op">-</span>k]                 
+reps[i]&lt;-<span class="kw">cvm.test</span>(x1,y1)
+}
+p&lt;-<span class="kw">mean</span>(<span class="kw">abs</span>(<span class="kw">c</span>(t0,reps))<span class="op">&gt;=</span><span class="kw">abs</span>(t0))
+<span class="kw">sprintf</span>(<span class="st">&quot;example 8.1,8.2 p.value=%f&quot;</span>,p)</code></pre></div>
+<pre><code>## [1] &quot;example 8.1,8.2 p.value=0.407000&quot;</code></pre>
+</div>
+<div id="design-experiments" class="section level3">
+<h3>Design experiments</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m&lt;-<span class="fl">1e3</span>;k&lt;-<span class="dv">3</span>;p&lt;-<span class="dv">2</span>;mu&lt;-<span class="fl">0.5</span>;R&lt;-<span class="dv">999</span>;<span class="kw">set.seed</span>(<span class="dv">12345</span>)
+p.values &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>,m,<span class="dv">3</span>)
+
+Tn&lt;-<span class="cf">function</span>(z,ix,sizes,k){
+n1&lt;-sizes[<span class="dv">1</span>];n2&lt;-sizes[<span class="dv">2</span>];n&lt;-n1<span class="op">+</span>n2
+<span class="cf">if</span>(<span class="kw">is.vector</span>(z)) z&lt;-<span class="kw">data.frame</span>(z,<span class="dv">0</span>)
+z&lt;-z[ix, ]
+NN&lt;-<span class="kw">nn2</span>(<span class="dt">data=</span>z,<span class="dt">k=</span>k<span class="op">+</span><span class="dv">1</span>)
+block1&lt;-NN<span class="op">$</span>nn.idx[<span class="dv">1</span><span class="op">:</span>n1,<span class="op">-</span><span class="dv">1</span>] 
+block2&lt;-NN<span class="op">$</span>nn.idx[(n1<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>n,<span class="op">-</span><span class="dv">1</span>] 
+i1&lt;-<span class="kw">sum</span>(block1 <span class="op">&lt;=</span><span class="st"> </span>n1)
+i2&lt;-<span class="kw">sum</span>(block2 <span class="op">&gt;=</span><span class="st"> </span>n1) 
+(i1<span class="op">+</span>i2)<span class="op">/</span>(k<span class="op">*</span>n)
+}
+
+eqdist.nn&lt;-<span class="cf">function</span>(z,sizes,k){
+boot.obj&lt;-<span class="kw">boot</span>(<span class="dt">data=</span>z,<span class="dt">statistic=</span>Tn,<span class="dt">R=</span>R,<span class="dt">sim=</span><span class="st">&quot;permutation&quot;</span>,<span class="dt">sizes=</span>sizes,<span class="dt">k=</span>k)
+ts&lt;-<span class="kw">c</span>(boot.obj<span class="op">$</span>t0,boot.obj<span class="op">$</span>t)
+p.value&lt;-<span class="kw">mean</span>(ts<span class="op">&gt;=</span>ts[<span class="dv">1</span>])
+<span class="kw">list</span>(<span class="dt">statistic=</span>ts[<span class="dv">1</span>],<span class="dt">p.value=</span>p.value)
+}</code></pre></div>
+<p>Unequal variances and equal expectations</p>
+<pre><code>## [1] 0.678 0.905 0.952</code></pre>
+<p>Unequal variances and unequal expectations</p>
+<pre><code>## [1] 0.874 0.998 0.999</code></pre>
+<p>t distribution with 1 df,bimodel distribution</p>
+<pre><code>## [1] 0.98 1.00 1.00</code></pre>
+<p>Unbalanced samples</p>
+<pre><code>## [1] 0.090 0.103 0.093</code></pre>
+</div>
+<div id="section-13" class="section level3">
+<h3>9.3</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
+m&lt;-<span class="dv">10000</span>
+sigma&lt;-<span class="dv">2</span>
+x&lt;-<span class="kw">numeric</span>(m)
+x[<span class="dv">1</span>]&lt;-<span class="kw">rnorm</span>(<span class="dv">1</span>)
+k&lt;-<span class="dv">0</span>
+u&lt;-<span class="kw">runif</span>(m)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>m){
+xt&lt;-x[i<span class="op">-</span><span class="dv">1</span>]
+y&lt;-<span class="kw">rnorm</span>(<span class="dv">1</span>,xt,sigma)
+num&lt;-<span class="kw">dcauchy</span>(y)<span class="op">*</span><span class="kw">dnorm</span>(xt,y,sigma)
+den&lt;-<span class="kw">dcauchy</span>(xt)<span class="op">*</span><span class="kw">dnorm</span>(y,xt,sigma)
+<span class="cf">if</span>(u[i]<span class="op">&lt;=</span>num<span class="op">/</span>den){
+x[i]&lt;-y
+}<span class="cf">else</span>{
+x[i]&lt;-xt
+k&lt;-k<span class="op">+</span><span class="dv">1</span>     
+}
+}
+b&lt;-<span class="dv">1001</span>      <span class="co">#discard the burnin sample</span>
+y&lt;-x[b<span class="op">:</span>m]
+a&lt;-<span class="kw">ppoints</span>(<span class="dv">200</span>)
+QC&lt;-<span class="kw">qcauchy</span>(a)  <span class="co">#quantiles of Cauchy</span>
+Q&lt;-<span class="kw">quantile</span>(y, a)
+qc&lt;-<span class="kw">qcauchy</span>(<span class="fl">0.1</span>) <span class="co">#deciles of Cauchy</span>
+q&lt;-<span class="kw">quantile</span>(y,<span class="fl">0.1</span>)
+<span class="kw">qqplot</span>(QC,Q,<span class="dt">main=</span><span class="st">&quot;QQ-plot&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;Cauchy Quantiles&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Sample Quantiles&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">col=</span><span class="st">'steelblue'</span>,<span class="dt">lwd=</span><span class="dv">2</span>)
+<span class="kw">points</span>(q,qc,<span class="dt">cex=</span><span class="fl">1.5</span>,<span class="dt">pch=</span><span class="dv">16</span>,<span class="dt">col=</span><span class="st">&quot;tomato&quot;</span>)  <span class="co">#The tomato dots represent the deciles </span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="section-14" class="section level3">
+<h3>9.6</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
+w&lt;-.<span class="dv">5</span> <span class="co">#width of the uniform support set </span>
+m&lt;-<span class="dv">10000</span> <span class="co">#length of the chain </span>
+burn&lt;-<span class="dv">1000</span> <span class="co">#burn-in time </span>
+x&lt;-<span class="kw">numeric</span>(m) <span class="co">#the chain  </span>
+ob&lt;-<span class="kw">c</span>(<span class="dv">125</span>,<span class="dv">18</span>,<span class="dv">20</span>,<span class="dv">34</span>) <span class="co">#the observed sample</span>
+prob&lt;-<span class="cf">function</span>(y,ob){ <span class="co"># computes the target density </span>
+<span class="cf">if</span>(y <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">||</span><span class="st"> </span>y <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>){
+<span class="kw">return</span>(<span class="dv">0</span>)
+}<span class="cf">else</span>{
+<span class="kw">return</span>((<span class="fl">0.5</span><span class="op">+</span>y<span class="op">/</span><span class="dv">4</span>)<span class="op">^</span>ob[<span class="dv">1</span>]<span class="op">*</span>((<span class="dv">1</span><span class="op">-</span>y)<span class="op">/</span><span class="dv">4</span>)<span class="op">^</span>ob[<span class="dv">2</span>]<span class="op">*</span>
+((<span class="dv">1</span><span class="op">-</span>y)<span class="op">/</span><span class="dv">4</span>)<span class="op">^</span>ob[<span class="dv">3</span>]<span class="op">*</span>(y<span class="op">/</span><span class="dv">4</span>)<span class="op">^</span>ob[<span class="dv">4</span>])
+}
+}
+u&lt;-<span class="kw">runif</span>(m) <span class="co">#for accept/reject step </span>
+v&lt;-<span class="kw">runif</span>(m,<span class="op">-</span>w,w) <span class="co">#proposal distribution </span>
+x[<span class="dv">1</span>] &lt;-.<span class="dv">5</span> 
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>m) { 
+y&lt;-x[i<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span>v[i] 
+<span class="cf">if</span>(u[i]<span class="op">&lt;=</span><span class="kw">prob</span>(y,ob)<span class="op">/</span><span class="kw">prob</span>(x[i<span class="op">-</span><span class="dv">1</span>],ob)){
+x[i]&lt;-y
+}<span class="cf">else</span>{ 
+x[i]&lt;-x[i<span class="op">-</span><span class="dv">1</span>]} 
+}
+<span class="kw">mean</span>(x[<span class="dv">1001</span><span class="op">:</span>m])</code></pre></div>
+<pre><code>## [1] 0.6258054</code></pre>
+</div>
+</div>
+<div id="homework7" class="section level2">
+<h2>homework7</h2>
+<div id="section-15" class="section level3">
+<h3>9.6</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Gelman.Rubin &lt;-<span class="st"> </span><span class="cf">function</span>(psi) {
+psi&lt;-<span class="kw">as.matrix</span>(psi)        <span class="co"># psi[i,j] is the statistic psi(X[i,1:j])</span>
+n&lt;-<span class="kw">ncol</span>(psi)               <span class="co"># for chain in i-th row of X</span>
+k&lt;-<span class="kw">nrow</span>(psi)
+psi.means&lt;-<span class="kw">rowMeans</span>(psi)   <span class="co">#row means</span>
+B&lt;-n<span class="op">*</span><span class="kw">var</span>(psi.means)        <span class="co">#between variance est.</span>
+psi.w&lt;-<span class="kw">apply</span>(psi,<span class="dv">1</span>,<span class="st">&quot;var&quot;</span>)  <span class="co">#within variances</span>
+W&lt;-<span class="kw">mean</span>(psi.w)             <span class="co">#within est.</span>
+v.hat&lt;-W<span class="op">*</span>(n<span class="op">-</span><span class="dv">1</span>)<span class="op">/</span>n<span class="op">+</span>(B<span class="op">/</span>n)     <span class="co">#upper variance est.</span>
+r.hat&lt;-v.hat<span class="op">/</span>W             <span class="co">#G-R statistic</span>
+<span class="kw">return</span>(r.hat)
+}       
+
+prob&lt;-<span class="cf">function</span>(y,ob){ <span class="co"># computes the target density </span>
+<span class="cf">if</span>(y <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">||</span><span class="st"> </span>y <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>){
+<span class="kw">return</span>(<span class="dv">0</span>)
+}<span class="cf">else</span>{
+<span class="kw">return</span>((<span class="fl">0.5</span><span class="op">+</span>y<span class="op">/</span><span class="dv">4</span>)<span class="op">^</span>ob[<span class="dv">1</span>]<span class="op">*</span>((<span class="dv">1</span><span class="op">-</span>y)<span class="op">/</span><span class="dv">4</span>)<span class="op">^</span>ob[<span class="dv">2</span>]<span class="op">*</span>
+((<span class="dv">1</span><span class="op">-</span>y)<span class="op">/</span><span class="dv">4</span>)<span class="op">^</span>ob[<span class="dv">3</span>]<span class="op">*</span>(y<span class="op">/</span><span class="dv">4</span>)<span class="op">^</span>ob[<span class="dv">4</span>])
+}
+}
+
+mult.chain&lt;-<span class="cf">function</span>(ob,w,m,x1){
+x&lt;-<span class="kw">numeric</span>(m)      <span class="co">#the chain</span>
+u&lt;-<span class="kw">runif</span>(m)        <span class="co">#for accept/reject step </span>
+v&lt;-<span class="kw">runif</span>(m,<span class="op">-</span>w,w)   <span class="co">#proposal distribution </span>
+x[<span class="dv">1</span>]&lt;-x1 
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>m) { 
+y&lt;-x[i<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span>v[i] 
+<span class="cf">if</span>(u[i]<span class="op">&lt;=</span><span class="kw">prob</span>(y,ob)<span class="op">/</span><span class="kw">prob</span>(x[i<span class="op">-</span><span class="dv">1</span>],ob)){
+x[i]&lt;-y
+}<span class="cf">else</span>{ 
+x[i]&lt;-x[i<span class="op">-</span><span class="dv">1</span>]} 
+}
+<span class="kw">return</span>(x)
+}
+
+w&lt;-.<span class="dv">5</span>               <span class="co">#width of the uniform support set </span>
+ob&lt;-<span class="kw">c</span>(<span class="dv">125</span>,<span class="dv">18</span>,<span class="dv">20</span>,<span class="dv">34</span>) <span class="co">#the observed sample</span>
+m&lt;-<span class="dv">10000</span>            <span class="co">#length of the chain </span>
+burn&lt;-<span class="dv">1000</span>          <span class="co">#burn-in time </span>
+k&lt;-<span class="dv">4</span>                <span class="co">#number of chains to generate</span>
+x0&lt;-<span class="kw">c</span>(<span class="fl">0.5</span>,<span class="fl">0.9</span>,<span class="fl">0.1</span>,<span class="fl">0.75</span>)  <span class="co">#choose overdispersed initial values</span>
+
+<span class="kw">set.seed</span>(<span class="dv">12345</span>)     <span class="co">#generate the chains</span>
+X&lt;-<span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt">nrow=</span>k,<span class="dt">ncol=</span>m)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>k){
+X[i, ]&lt;-<span class="kw">mult.chain</span>(ob,w,m,x0[i])
+}
+    
+psi&lt;-<span class="kw">t</span>(<span class="kw">apply</span>(X,<span class="dv">1</span>,cumsum)) <span class="co">#compute diagnostic statistics</span>
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(psi)){
+psi[i,]&lt;-psi[i,]<span class="op">/</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(psi))
+}
+    
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>),<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))  <span class="co">#plot psi for the four chains</span>
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>k)
+<span class="kw">plot</span>(psi[i,(burn<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>m],<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">xlab=</span>i,<span class="dt">ylab=</span><span class="kw">bquote</span>(psi))</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co">#restore default</span>
+rhat&lt;-<span class="kw">rep</span>(<span class="dv">0</span>,m)
+<span class="cf">for</span>(j <span class="cf">in</span> (burn<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>m)
+rhat[j]&lt;-<span class="kw">Gelman.Rubin</span>(psi[,<span class="dv">1</span><span class="op">:</span>j])
+<span class="kw">plot</span>(rhat[(burn<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>m],<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;length&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;R&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="fl">1.2</span>,<span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="section-16" class="section level3">
+<h3>11.4</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s.k.<span class="dv">1</span>&lt;-<span class="cf">function</span>(a){
+f1&lt;-<span class="dv">1</span><span class="op">-</span><span class="kw">pt</span>(<span class="kw">sqrt</span>(a<span class="op">^</span><span class="dv">2</span><span class="op">*</span>(k<span class="op">-</span><span class="dv">1</span>)<span class="op">/</span>(k<span class="op">-</span>a<span class="op">^</span><span class="dv">2</span>)),<span class="dt">df=</span>k<span class="op">-</span><span class="dv">1</span>)
+f2&lt;-<span class="dv">1</span><span class="op">-</span><span class="kw">pt</span>(<span class="kw">sqrt</span>(a<span class="op">^</span><span class="dv">2</span><span class="op">*</span>k<span class="op">/</span>(k<span class="op">+</span><span class="dv">1</span><span class="op">-</span>a<span class="op">^</span><span class="dv">2</span>)),<span class="dt">df=</span>k)
+<span class="kw">return</span>(f1<span class="op">-</span>f2)
+}
+
+s.k.<span class="dv">2</span>&lt;-<span class="cf">function</span>(a){
+f1&lt;-<span class="dv">1</span><span class="op">-</span><span class="kw">pt</span>(<span class="kw">sqrt</span>(a<span class="op">^</span><span class="dv">2</span><span class="op">*</span>(k<span class="op">-</span><span class="dv">1</span>)<span class="op">/</span>(k<span class="op">-</span>a<span class="op">^</span><span class="dv">2</span>)),<span class="dt">df=</span>k<span class="op">-</span><span class="dv">1</span>)
+f2&lt;-<span class="dv">1</span><span class="op">-</span><span class="kw">pt</span>(<span class="kw">sqrt</span>(a<span class="op">^</span><span class="dv">2</span><span class="op">*</span>k<span class="op">/</span>(k<span class="op">+</span><span class="dv">1</span><span class="op">-</span>a<span class="op">^</span><span class="dv">2</span>)),<span class="dt">df=</span>k)
+<span class="kw">abs</span>(f1<span class="op">-</span>f2)
+}
+
+solution&lt;-<span class="cf">function</span>(x){
+<span class="kw">assign</span>(<span class="st">&quot;k&quot;</span>,x,<span class="dt">pos=</span><span class="dv">1</span>)
+<span class="cf">if</span>(k<span class="op">&lt;=</span><span class="dv">21</span>){
+myfit&lt;-<span class="kw">uniroot</span>(s.k.<span class="dv">1</span>,<span class="kw">c</span>(<span class="fl">1e-4</span>,<span class="kw">sqrt</span>(x)<span class="op">-</span><span class="fl">1e-4</span>))<span class="op">$</span>root
+}<span class="cf">else</span>{
+myfit&lt;-<span class="kw">optimize</span>(s.k.<span class="dv">2</span>,<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">3</span>))<span class="op">$</span>minimum        ##while k&gt;=22,upper=3
+}
+<span class="kw">return</span>(myfit)
+}
+
+A.k&lt;-<span class="kw">sapply</span>(<span class="kw">c</span>(<span class="dv">4</span><span class="op">:</span><span class="dv">25</span>,<span class="dv">100</span>,<span class="dv">500</span>,<span class="dv">1000</span>),solution)
+result&lt;-<span class="kw">data.frame</span>(<span class="dt">k=</span><span class="kw">c</span>(<span class="dv">4</span><span class="op">:</span><span class="dv">25</span>,<span class="dv">100</span>,<span class="dv">500</span>,<span class="dv">1000</span>),<span class="dt">ponits=</span>A.k)
+<span class="kw">t</span>(result)</code></pre></div>
+<pre><code>##            [,1]     [,2]     [,3]     [,4]     [,5]     [,6]      [,7]
+## k      4.000000 5.000000 6.000000 7.000000 8.000000 9.000000 10.000000
+## ponits 1.492103 1.533549 1.562768 1.584421 1.601192 1.614517  1.625391
+##             [,8]      [,9]     [,10]     [,11]     [,12]     [,13]
+## k      11.000000 12.000000 13.000000 14.000000 15.000000 16.000000
+## ponits  1.634409  1.642004  1.648565  1.654167  1.659099  1.663452
+##            [,14]     [,15]    [,16]     [,17]     [,18]     [,19]
+## k      17.000000 18.000000 19.00000 20.000000 21.000000 22.000000
+## ponits  1.667288  1.670736  1.67384  1.676588  1.679139  1.681483
+##            [,20]     [,21]     [,22]      [,23]      [,24]       [,25]
+## k      23.000000 24.000000 25.000000 100.000000 500.000000 1000.000000
+## ponits  1.683601  1.685543  1.687352   1.720596   1.729762    1.730893</code></pre>
+</div>
+</div>
+<div id="homework8" class="section level2">
+<h2>homework8</h2>
+<div id="section-17" class="section level3">
+<h3>11.6</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f&lt;-<span class="cf">function</span>(x,theta,eta){
+<span class="dv">1</span><span class="op">/</span>(theta<span class="op">*</span>pi<span class="op">*</span>(<span class="dv">1</span><span class="op">+</span>((x<span class="op">-</span>eta)<span class="op">/</span>theta)<span class="op">^</span><span class="dv">2</span>))
+}
+mycauchy&lt;-<span class="cf">function</span>(x,theta,eta){
+res&lt;-<span class="kw">integrate</span>(f,<span class="dt">lower=</span><span class="op">-</span><span class="ot">Inf</span>,<span class="dt">upper=</span>x,<span class="dt">rel.tol=</span>.Machine<span class="op">$</span>double.eps<span class="op">^</span><span class="fl">0.25</span>,
+<span class="dt">theta=</span>theta,<span class="dt">eta=</span>eta)
+res<span class="op">$</span>value
+}
+upper&lt;-<span class="kw">seq</span>(<span class="op">-</span><span class="dv">10</span>,<span class="dv">10</span>,<span class="dv">2</span>)
+result&lt;-<span class="kw">rbind</span>(<span class="dt">x=</span><span class="kw">as.integer</span>(upper),<span class="dt">mycauchy=</span><span class="kw">mapply</span>(mycauchy,upper,<span class="dv">1</span>,<span class="dv">0</span>),<span class="dt">pcauchy=</span><span class="kw">pcauchy</span>(upper)) <span class="co">#default theta=1, eta=0</span>
+<span class="kw">options</span>(<span class="dt">warn=</span><span class="op">-</span><span class="dv">1</span>)
+knitr<span class="op">::</span><span class="kw">kable</span>(result, <span class="dt">format =</span> <span class="st">&quot;markdown&quot;</span>)</code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="7%"></col>
+<col width="9%"></col>
+<col width="9%"></col>
+<col width="9%"></col>
+<col width="9%"></col>
+<col width="9%"></col>
+<col width="3%"></col>
+<col width="8%"></col>
+<col width="8%"></col>
+<col width="8%"></col>
+<col width="8%"></col>
+<col width="9%"></col>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">x</td>
+<td align="right">-10.0000000</td>
+<td align="right">-8.0000000</td>
+<td align="right">-6.0000000</td>
+<td align="right">-4.0000000</td>
+<td align="right">-2.0000000</td>
+<td align="right">0.0</td>
+<td align="right">2.0000000</td>
+<td align="right">4.0000000</td>
+<td align="right">6.0000000</td>
+<td align="right">8.0000000</td>
+<td align="right">10.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">mycauchy</td>
+<td align="right">0.0317255</td>
+<td align="right">0.0395834</td>
+<td align="right">0.0525685</td>
+<td align="right">0.0779791</td>
+<td align="right">0.1475836</td>
+<td align="right">0.5</td>
+<td align="right">0.8524164</td>
+<td align="right">0.9220209</td>
+<td align="right">0.9474315</td>
+<td align="right">0.9604166</td>
+<td align="right">0.9682745</td>
+</tr>
+<tr class="odd">
+<td align="left">pcauchy</td>
+<td align="right">0.0317255</td>
+<td align="right">0.0395834</td>
+<td align="right">0.0525685</td>
+<td align="right">0.0779791</td>
+<td align="right">0.1475836</td>
+<td align="right">0.5</td>
+<td align="right">0.8524164</td>
+<td align="right">0.9220209</td>
+<td align="right">0.9474315</td>
+<td align="right">0.9604166</td>
+<td align="right">0.9682745</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="homework" class="section level3">
+<h3>Homework</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n.A&lt;-<span class="dv">28</span>;n.B&lt;-<span class="dv">24</span>;n.OO&lt;-<span class="dv">41</span>;n.AB&lt;-<span class="dv">70</span> 
+N&lt;-<span class="dv">10000</span> <span class="co">#max. number of iterations </span>
+tol&lt;-.Machine<span class="op">$</span>double.eps 
+L.old&lt;-<span class="kw">c</span>(.<span class="dv">2</span>,.<span class="dv">35</span>)  <span class="co">#initial est. for p and q </span>
+M.value&lt;-<span class="dv">0</span>
+L.list&lt;-<span class="kw">data.frame</span>(<span class="dt">p=</span><span class="dv">0</span>,<span class="dt">q=</span><span class="dv">0</span>)
+
+mlogL&lt;-<span class="cf">function</span>(l,l.old){
+r&lt;-<span class="dv">1</span><span class="op">-</span><span class="kw">sum</span>(l)
+r.old&lt;-<span class="dv">1</span><span class="op">-</span><span class="kw">sum</span>(l.old)
+n.AA&lt;-n.A<span class="op">*</span>l.old[<span class="dv">1</span>]<span class="op">^</span><span class="dv">2</span><span class="op">/</span>(l.old[<span class="dv">1</span>]<span class="op">^</span><span class="dv">2</span><span class="op">+</span><span class="dv">2</span><span class="op">*</span>l.old[<span class="dv">1</span>]<span class="op">*</span>r.old)
+n.BB&lt;-n.B<span class="op">*</span>l.old[<span class="dv">2</span>]<span class="op">^</span><span class="dv">2</span><span class="op">/</span>(l.old[<span class="dv">2</span>]<span class="op">^</span><span class="dv">2</span><span class="op">+</span><span class="dv">2</span><span class="op">*</span>l.old[<span class="dv">2</span>]<span class="op">*</span>r.old)
+llh&lt;-<span class="dv">2</span><span class="op">*</span>n.OO<span class="op">*</span><span class="kw">log</span>(r)<span class="op">+</span>n.AB<span class="op">*</span><span class="kw">log</span>(<span class="dv">2</span><span class="op">*</span>l[<span class="dv">1</span>]<span class="op">*</span>l[<span class="dv">2</span>])<span class="op">+</span>
+<span class="dv">2</span><span class="op">*</span>n.AA<span class="op">*</span><span class="kw">log</span>(l[<span class="dv">1</span>])<span class="op">+</span><span class="dv">2</span><span class="op">*</span>n.BB<span class="op">*</span><span class="kw">log</span>(l[<span class="dv">2</span>])<span class="op">+</span>
+(n.A<span class="op">-</span>n.AA)<span class="op">*</span><span class="kw">log</span>(<span class="dv">2</span><span class="op">*</span>l[<span class="dv">1</span>]<span class="op">*</span>r)<span class="op">+</span>(n.B<span class="op">-</span>n.BB)<span class="op">*</span><span class="kw">log</span>(<span class="dv">2</span><span class="op">*</span>l[<span class="dv">2</span>]<span class="op">*</span>r)
+<span class="op">-</span>llh
+}
+
+<span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>N){
+res&lt;-<span class="kw">optim</span>(<span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.2</span>),mlogL,<span class="dt">l.old=</span>L.old)
+L&lt;-res<span class="op">$</span>par
+L.list[j,]&lt;-L
+M.value[j]&lt;-<span class="st"> </span><span class="op">-</span>res<span class="op">$</span>value
+<span class="cf">if</span>(<span class="kw">sum</span>(<span class="kw">abs</span>(L<span class="op">-</span>L.old)<span class="op">/</span>L.old)<span class="op">&lt;</span>tol) <span class="cf">break</span> 
+L.old&lt;-L
+}
+L.list  <span class="co">#p,q</span></code></pre></div>
+<pre><code>##           p         q
+## 1 0.3162480 0.3089572
+## 2 0.3261096 0.3097918
+## 3 0.3272154 0.3102683
+## 4 0.3273629 0.3103240
+## 5 0.3273616 0.3103873
+## 6 0.3273694 0.3104224
+## 7 0.3273694 0.3104224</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M.value  ##the max likelihood values,no increase !</code></pre></div>
+<pre><code>## [1] -280.5184 -283.4468 -283.8634 -283.9254 -283.9334 -283.9358 -283.9374</code></pre>
+</div>
+</div>
+<div id="homework9" class="section level2">
+<h2>homework9</h2>
+<div id="exercise-1" class="section level3">
+<h3>exercise 1</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">attach</span>(mtcars)</code></pre></div>
+<pre><code>## The following object is masked from package:ggplot2:
+## 
+##     mpg</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">formulas&lt;-<span class="kw">list</span>(mpg <span class="op">~</span><span class="st"> </span>disp, mpg <span class="op">~</span><span class="st"> </span><span class="kw">I</span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>disp), mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">+</span><span class="st"> </span>wt, mpg <span class="op">~</span><span class="st"> </span><span class="kw">I</span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>disp) <span class="op">+</span><span class="st"> </span>wt)
+myresult.<span class="dv">1</span>&lt;-<span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="kw">length</span>(formulas))
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(formulas)) myresult.<span class="dv">1</span>[[i]]&lt;-<span class="kw">lm</span>(formulas[[i]],<span class="dt">data=</span>mtcars)
+myresult.<span class="dv">2</span>&lt;-<span class="kw">lapply</span>(formulas,lm)
+myresult.<span class="dv">1</span>           <span class="co">#the result of for loops</span></code></pre></div>
+<pre><code>## [[1]]
+## 
+## Call:
+## lm(formula = formulas[[i]], data = mtcars)
+## 
+## Coefficients:
+## (Intercept)         disp  
+##    29.59985     -0.04122  
+## 
+## 
+## [[2]]
+## 
+## Call:
+## lm(formula = formulas[[i]], data = mtcars)
+## 
+## Coefficients:
+## (Intercept)    I(1/disp)  
+##       10.75      1557.67  
+## 
+## 
+## [[3]]
+## 
+## Call:
+## lm(formula = formulas[[i]], data = mtcars)
+## 
+## Coefficients:
+## (Intercept)         disp           wt  
+##    34.96055     -0.01772     -3.35083  
+## 
+## 
+## [[4]]
+## 
+## Call:
+## lm(formula = formulas[[i]], data = mtcars)
+## 
+## Coefficients:
+## (Intercept)    I(1/disp)           wt  
+##      19.024     1142.560       -1.798</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myresult.<span class="dv">2</span>           <span class="co">#the result of lapply</span></code></pre></div>
+<pre><code>## [[1]]
+## 
+## Call:
+## FUN(formula = X[[i]])
+## 
+## Coefficients:
+## (Intercept)         disp  
+##    29.59985     -0.04122  
+## 
+## 
+## [[2]]
+## 
+## Call:
+## FUN(formula = X[[i]])
+## 
+## Coefficients:
+## (Intercept)    I(1/disp)  
+##       10.75      1557.67  
+## 
+## 
+## [[3]]
+## 
+## Call:
+## FUN(formula = X[[i]])
+## 
+## Coefficients:
+## (Intercept)         disp           wt  
+##    34.96055     -0.01772     -3.35083  
+## 
+## 
+## [[4]]
+## 
+## Call:
+## FUN(formula = X[[i]])
+## 
+## Coefficients:
+## (Intercept)    I(1/disp)           wt  
+##      19.024     1142.560       -1.798</code></pre>
+</div>
+<div id="exercise-2" class="section level3">
+<h3>exercise 2</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
+bootstraps&lt;-<span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="cf">function</span>(i){
+rows&lt;-<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(mtcars),<span class="dt">rep =</span> <span class="ot">TRUE</span>)
+mtcars[rows, ]
+})
+myresult.<span class="dv">1</span>&lt;-<span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>,<span class="dv">10</span>)
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>){
+myresult.<span class="dv">1</span>[[i]]&lt;-<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp,<span class="dt">data=</span>bootstraps[[i]])
+}
+myresult.<span class="dv">2</span>&lt;-<span class="kw">lapply</span>(bootstraps,lm,<span class="dt">formula=</span>mpg<span class="op">~</span>disp)</code></pre></div>
+</div>
+<div id="exercise-3" class="section level3">
+<h3>exercise 3</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rsq&lt;-<span class="cf">function</span>(mod) <span class="kw">summary.lm</span>(mod)<span class="op">$</span>r.squared   
+<span class="kw">lapply</span>(<span class="kw">lapply</span>(formulas,lm),rsq)                      <span class="co">#exercise 3</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 0.7183433
+## 
+## [[2]]
+## [1] 0.8596865
+## 
+## [[3]]
+## [1] 0.7809306
+## 
+## [[4]]
+## [1] 0.8838038</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lapply</span>(<span class="kw">lapply</span>(bootstraps,lm,<span class="dt">formula=</span>mpg<span class="op">~</span>disp),rsq)   <span class="co">#exercise 4</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 0.737199
+## 
+## [[2]]
+## [1] 0.6644658
+## 
+## [[3]]
+## [1] 0.6607375
+## 
+## [[4]]
+## [1] 0.7185377
+## 
+## [[5]]
+## [1] 0.7669859
+## 
+## [[6]]
+## [1] 0.7132957
+## 
+## [[7]]
+## [1] 0.6390637
+## 
+## [[8]]
+## [1] 0.7653332
+## 
+## [[9]]
+## [1] 0.6666068
+## 
+## [[10]]
+## [1] 0.7716368</code></pre>
+</div>
+<div id="exercise-4" class="section level3">
+<h3>exercise 4</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
+trials&lt;-<span class="kw">replicate</span>(<span class="dv">100</span>,<span class="kw">t.test</span>(<span class="kw">rpois</span>(<span class="dv">10</span>,<span class="dv">10</span>),<span class="kw">rpois</span>(<span class="dv">7</span>, <span class="dv">10</span>)),<span class="dt">simplify =</span> <span class="ot">FALSE</span>)
+my.pvalue&lt;-<span class="cf">function</span>(x){         <span class="co">#using anonymous function</span>
+x<span class="op">$</span>p.value
+}
+<span class="kw">sapply</span>(trials, my.pvalue)</code></pre></div>
+<pre><code>##   [1] 0.178809502 0.994262402 0.064786264 0.952716251 0.306702525
+##   [6] 0.198224877 0.272315768 0.283722503 0.415010770 0.151957272
+##  [11] 0.072625558 0.249014108 0.773938569 0.225693023 0.840328179
+##  [16] 0.987492066 0.316112244 0.481740992 0.457889571 0.565871989
+##  [21] 0.990401857 0.257905112 0.538178810 0.764364559 0.845551784
+##  [26] 0.905726387 0.086725138 0.763639767 0.088857796 0.531422351
+##  [31] 0.731524606 0.195574176 0.598923896 0.702134266 0.147168770
+##  [36] 0.552598436 0.117002585 0.233188724 0.127240002 0.115791872
+##  [41] 0.317030411 0.691674119 0.450514119 0.315343567 0.073583503
+##  [46] 1.000000000 0.011099981 0.580714657 0.591841839 0.638287091
+##  [51] 0.283349660 0.722557025 0.408819857 0.127117578 0.000507563
+##  [56] 0.841418067 0.624022112 0.650656602 0.632088219 0.578419158
+##  [61] 0.052008307 0.920025002 0.646534041 0.344836350 0.751638828
+##  [66] 0.687324041 0.134492519 0.490444844 0.711864108 0.020394691
+##  [71] 0.342792908 0.960823950 0.111337525 0.546907007 0.773231299
+##  [76] 0.626303636 0.298304108 0.146218612 0.133931753 0.814393484
+##  [81] 0.096839576 0.974929586 0.808056754 0.346709412 0.308443909
+##  [86] 0.600935588 0.984471134 0.703069949 0.678262994 0.565803030
+##  [91] 0.895621651 0.723438333 0.431024548 0.061331285 0.043636182
+##  [96] 0.359298038 0.372409666 0.953012247 0.503028465 0.594358009</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(trials,<span class="st">&quot;[[&quot;</span>,<span class="dv">3</span>)           <span class="co">#using [[ directly</span></code></pre></div>
+<pre><code>##   [1] 0.178809502 0.994262402 0.064786264 0.952716251 0.306702525
+##   [6] 0.198224877 0.272315768 0.283722503 0.415010770 0.151957272
+##  [11] 0.072625558 0.249014108 0.773938569 0.225693023 0.840328179
+##  [16] 0.987492066 0.316112244 0.481740992 0.457889571 0.565871989
+##  [21] 0.990401857 0.257905112 0.538178810 0.764364559 0.845551784
+##  [26] 0.905726387 0.086725138 0.763639767 0.088857796 0.531422351
+##  [31] 0.731524606 0.195574176 0.598923896 0.702134266 0.147168770
+##  [36] 0.552598436 0.117002585 0.233188724 0.127240002 0.115791872
+##  [41] 0.317030411 0.691674119 0.450514119 0.315343567 0.073583503
+##  [46] 1.000000000 0.011099981 0.580714657 0.591841839 0.638287091
+##  [51] 0.283349660 0.722557025 0.408819857 0.127117578 0.000507563
+##  [56] 0.841418067 0.624022112 0.650656602 0.632088219 0.578419158
+##  [61] 0.052008307 0.920025002 0.646534041 0.344836350 0.751638828
+##  [66] 0.687324041 0.134492519 0.490444844 0.711864108 0.020394691
+##  [71] 0.342792908 0.960823950 0.111337525 0.546907007 0.773231299
+##  [76] 0.626303636 0.298304108 0.146218612 0.133931753 0.814393484
+##  [81] 0.096839576 0.974929586 0.808056754 0.346709412 0.308443909
+##  [86] 0.600935588 0.984471134 0.703069949 0.678262994 0.565803030
+##  [91] 0.895621651 0.723438333 0.431024548 0.061331285 0.043636182
+##  [96] 0.359298038 0.372409666 0.953012247 0.503028465 0.594358009</code></pre>
+</div>
+<div id="exercise-5" class="section level3">
+<h3>exercise 5</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v.lapply&lt;-<span class="cf">function</span> (f,n,type, ...){             <span class="co">#an lapply() variant</span>
+f&lt;-<span class="kw">match.fun</span>(f)
+tt=<span class="kw">Map</span>(f, ...)
+<span class="cf">if</span>(type<span class="op">==</span><span class="st">&quot;numeric&quot;</span>)  y=<span class="kw">vapply</span>(tt,cbind,<span class="kw">numeric</span>(n))
+<span class="cf">else</span> <span class="cf">if</span>(type<span class="op">==</span><span class="st">&quot;character&quot;</span>) y=<span class="kw">vapply</span>(tt,cbind,<span class="kw">character</span>(n))
+<span class="cf">else</span> <span class="cf">if</span>(type<span class="op">==</span><span class="st">&quot;complex&quot;</span>) y=<span class="kw">vapply</span>(tt,cbind,<span class="kw">complex</span>(n))
+<span class="cf">else</span> <span class="cf">if</span>(type<span class="op">==</span><span class="st">&quot;logical&quot;</span>) y=<span class="kw">vapply</span>(tt,cbind,<span class="kw">logical</span>(n))
+<span class="kw">return</span>(y)
+}
+my.f&lt;-<span class="cf">function</span>(x1,x2){   <span class="co">#example</span>
+<span class="kw">t.test</span>(x1,x2)<span class="op">$</span>p.value
+}
+x1&lt;-<span class="kw">replicate</span>(<span class="dv">100</span>,<span class="kw">rpois</span>(<span class="dv">10</span>,<span class="dv">10</span>),<span class="dt">simplify =</span> <span class="ot">FALSE</span>)
+x2&lt;-<span class="kw">replicate</span>(<span class="dv">100</span>,<span class="kw">rpois</span>(<span class="dv">7</span>,<span class="dv">10</span>),<span class="dt">simplify =</span> <span class="ot">FALSE</span>)
+<span class="kw">v.lapply</span>(my.f,<span class="dv">1</span>,<span class="st">&quot;numeric&quot;</span>,x1,x2)</code></pre></div>
+<pre><code>##   [1] 0.885640026 0.991090750 0.225235250 0.007857619 0.528824457
+##   [6] 0.366817961 0.795935673 0.444768564 0.375778587 0.492138444
+##  [11] 0.939185269 0.158880373 0.773203122 0.129158098 0.065587461
+##  [16] 0.389734361 0.963228171 0.474537103 0.957903104 0.782895989
+##  [21] 0.168994252 0.916787764 0.459599404 0.840039232 0.992713091
+##  [26] 0.952717315 0.934604907 0.829988445 0.853867201 0.405446048
+##  [31] 0.430676835 0.823844475 0.853975741 0.532173104 0.858942024
+##  [36] 0.543370631 0.519248709 0.987907435 0.969817423 0.961266627
+##  [41] 0.103370096 0.263379222 0.341433686 0.734591025 0.071979506
+##  [46] 0.727362281 0.473118233 0.641495865 0.445937423 0.520246153
+##  [51] 0.129391199 0.282200536 0.478748701 0.185119747 0.378958438
+##  [56] 0.785764724 0.238912658 0.811544429 0.971542648 0.889489964
+##  [61] 0.686121593 0.055441423 0.419258635 0.247107550 0.874394215
+##  [66] 0.596529076 0.468620890 0.349291033 0.463742688 0.940254775
+##  [71] 0.528044193 0.910877985 0.734713503 0.238292516 0.593037875
+##  [76] 0.076321272 0.826797348 0.429154724 0.536460036 0.663193804
+##  [81] 0.293904602 0.962565832 0.944471106 0.718879264 0.902716112
+##  [86] 0.573217977 0.721005749 0.696066589 0.608536946 0.266612410
+##  [91] 0.295191709 0.349508249 0.222181926 0.993246132 0.569640878
+##  [96] 0.940124755 0.956453886 0.332323668 0.343889188 0.266964850</code></pre>
+</div>
+</div>
+<div id="homework10" class="section level2">
+<h2>homework10</h2>
+<div id="exercise-4-1" class="section level3">
+<h3>exercise 4</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.chisq.test&lt;-<span class="cf">function</span>(x,y){
+<span class="cf">if</span>(<span class="op">!</span><span class="kw">is.vector</span>(x) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.vector</span>(y))
+<span class="kw">stop</span>(<span class="st">&quot;at least one of 'x' and 'y' is not a vector&quot;</span>)
+<span class="cf">if</span>(<span class="kw">typeof</span>(x)<span class="op">==</span><span class="st">&quot;character&quot;</span> <span class="op">||</span><span class="st"> </span><span class="kw">typeof</span>(y)<span class="op">==</span><span class="st">&quot;character&quot;</span>)
+<span class="kw">stop</span>(<span class="st">&quot;at least one of 'x' and 'y' is not a numeric vector&quot;</span>)
+<span class="cf">if</span>(<span class="kw">any</span>(x<span class="op">&lt;</span><span class="dv">0</span>) <span class="op">||</span><span class="st"> </span><span class="kw">anyNA</span>(x)) 
+<span class="kw">stop</span>(<span class="st">&quot;all entries of 'x' must be nonnegative and finite&quot;</span>)
+<span class="cf">if</span>(<span class="kw">any</span>(y<span class="op">&lt;</span><span class="dv">0</span>) <span class="op">||</span><span class="st"> </span><span class="kw">anyNA</span>(y)) 
+<span class="kw">stop</span>(<span class="st">&quot;all entries of 'y' must be nonnegative and finite&quot;</span>)
+<span class="cf">if</span>((n&lt;-<span class="kw">sum</span>(x))<span class="op">==</span><span class="dv">0</span>) 
+<span class="kw">stop</span>(<span class="st">&quot;at least one entry of 'x' must be positive&quot;</span>)
+<span class="cf">if</span>((n&lt;-<span class="kw">sum</span>(x))<span class="op">==</span><span class="dv">0</span>) 
+<span class="kw">stop</span>(<span class="st">&quot;at least one entry of 'x' must be positive&quot;</span>)
+<span class="cf">if</span>(<span class="kw">length</span>(x)<span class="op">!=</span><span class="kw">length</span>(y)) 
+<span class="kw">stop</span>(<span class="st">&quot;'x' and 'y' must have the same length&quot;</span>)
+DNAME&lt;-<span class="kw">paste</span>(<span class="kw">deparse</span>(<span class="kw">substitute</span>(x)),<span class="st">&quot;and&quot;</span>,<span class="kw">deparse</span>(<span class="kw">substitute</span>(y)))
+METHOD&lt;-<span class="st">&quot;Pearson's Chi-squared test&quot;</span>
+x&lt;-<span class="kw">rbind</span>(x,y)
+nr&lt;-<span class="kw">as.integer</span>(<span class="kw">nrow</span>(x));nc&lt;-<span class="kw">as.integer</span>(<span class="kw">ncol</span>(x))
+sr&lt;-<span class="kw">rowSums</span>(x);sc&lt;-<span class="kw">colSums</span>(x);n&lt;-<span class="kw">sum</span>(x)
+E&lt;-<span class="kw">outer</span>(sr,sc,<span class="st">&quot;*&quot;</span>)<span class="op">/</span>n
+STATISTIC&lt;-<span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span>E)<span class="op">^</span><span class="dv">2</span><span class="op">/</span>E)
+<span class="kw">names</span>(STATISTIC)&lt;-<span class="st">&quot;X-squared&quot;</span>
+<span class="kw">structure</span>(<span class="kw">list</span>(<span class="dt">statistic=</span>STATISTIC,<span class="dt">method=</span>METHOD,<span class="dt">data.name=</span>DNAME),<span class="dt">class=</span><span class="st">&quot;htest&quot;</span>)
+}
+
+mya&lt;-<span class="kw">c</span>(<span class="dv">762</span>,<span class="dv">327</span>,<span class="dv">468</span>);myb&lt;-<span class="kw">c</span>(<span class="dv">484</span>,<span class="dv">239</span>,<span class="dv">477</span>)    <span class="co">#example</span>
+<span class="kw">my.chisq.test</span>(mya,myb)        </code></pre></div>
+<pre><code>## 
+##  Pearson's Chi-squared test
+## 
+## data:  mya and myb
+## X-squared = 30.07</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">chisq.test</span>(<span class="kw">rbind</span>(mya,myb))</code></pre></div>
+<pre><code>## 
+##  Pearson's Chi-squared test
+## 
+## data:  rbind(mya, myb)
+## X-squared = 30.07, df = 2, p-value = 2.954e-07</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">microbenchmark</span>(<span class="dt">t1=</span><span class="kw">my.chisq.test</span>(mya,myb),<span class="dt">t2=</span><span class="kw">chisq.test</span>(<span class="kw">rbind</span>(mya,myb)))  </code></pre></div>
+<pre><code>## Unit: microseconds
+##  expr    min      lq     mean median      uq     max neval
+##    t1 41.638 43.1805 45.99262 44.209 45.7510 101.783   100
+##    t2 62.714 64.2570 68.39525 64.771 67.3415 180.947   100</code></pre>
+</div>
+<div id="exercise-5-1" class="section level3">
+<h3>exercise 5</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.table&lt;-<span class="cf">function</span>(...,<span class="dt">dnn =</span> <span class="kw">list.names</span>(...),<span class="dt">deparse.level =</span> <span class="dv">1</span>){
+    list.names &lt;-<span class="st"> </span><span class="cf">function</span>(...) {
+        l &lt;-<span class="st"> </span><span class="kw">as.list</span>(<span class="kw">substitute</span>(<span class="kw">list</span>(...)))[<span class="op">-</span>1L]
+        nm &lt;-<span class="st"> </span><span class="kw">names</span>(l)
+        fixup &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="kw">is.null</span>(nm)) 
+            <span class="kw">seq_along</span>(l)
+        <span class="cf">else</span> nm <span class="op">==</span><span class="st"> &quot;&quot;</span>
+        dep &lt;-<span class="st"> </span><span class="kw">vapply</span>(l[fixup], <span class="cf">function</span>(x) <span class="cf">switch</span>(deparse.level <span class="op">+</span><span class="st"> </span>
+<span class="st">            </span><span class="dv">1</span>, <span class="st">&quot;&quot;</span>, <span class="cf">if</span> (<span class="kw">is.symbol</span>(x)) <span class="kw">as.character</span>(x) <span class="cf">else</span> <span class="st">&quot;&quot;</span>, 
+            <span class="kw">deparse</span>(x, <span class="dt">nlines =</span> <span class="dv">1</span>)[1L]), <span class="st">&quot;&quot;</span>)
+        <span class="cf">if</span> (<span class="kw">is.null</span>(nm)) 
+            dep
+        <span class="cf">else</span> {
+            nm[fixup] &lt;-<span class="st"> </span>dep
+            nm
+        }
+    }
+    args &lt;-<span class="st"> </span><span class="kw">list</span>(...)
+    <span class="cf">if</span> (<span class="op">!</span><span class="kw">length</span>(args)) 
+        <span class="kw">stop</span>(<span class="st">&quot;nothing to tabulate&quot;</span>)
+    <span class="cf">if</span> (<span class="kw">length</span>(args) <span class="op">==</span><span class="st"> </span>1L <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">is.list</span>(args[[1L]])) {
+        args &lt;-<span class="st"> </span>args[[1L]]
+        <span class="cf">if</span> (<span class="kw">length</span>(dnn) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(args)) 
+            dnn &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(argn &lt;-<span class="st"> </span><span class="kw">names</span>(args))) 
+                argn
+            <span class="cf">else</span> <span class="kw">paste</span>(dnn[1L], <span class="kw">seq_along</span>(args), <span class="dt">sep =</span> <span class="st">&quot;.&quot;</span>)
+    }
+    bin &lt;-<span class="st"> </span>0L
+    lens &lt;-<span class="st"> </span><span class="ot">NULL</span>
+    dims &lt;-<span class="st"> </span><span class="kw">integer</span>()
+    pd &lt;-<span class="st"> </span>1L
+    dn &lt;-<span class="st"> </span><span class="ot">NULL</span>
+    <span class="cf">for</span> (a <span class="cf">in</span> args) {
+        <span class="cf">if</span> (<span class="kw">is.null</span>(lens)) 
+            lens &lt;-<span class="st"> </span><span class="kw">length</span>(a)
+        <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">length</span>(a) <span class="op">!=</span><span class="st"> </span>lens) 
+            <span class="kw">stop</span>(<span class="st">&quot;all arguments must have the same length&quot;</span>)
+        fact.a &lt;-<span class="st"> </span><span class="kw">is.factor</span>(a)
+        <span class="cf">if</span> (<span class="op">!</span>fact.a) {
+            a0 &lt;-<span class="st"> </span>a
+            a &lt;-<span class="st"> </span><span class="kw">factor</span>(a)
+        }
+        ll &lt;-<span class="st"> </span><span class="kw">levels</span>(a)
+        a &lt;-<span class="st"> </span><span class="kw">as.integer</span>(a)
+        nl &lt;-<span class="st"> </span><span class="kw">length</span>(ll)
+        dims &lt;-<span class="st"> </span><span class="kw">c</span>(dims, nl)
+        dn &lt;-<span class="st"> </span><span class="kw">c</span>(dn, <span class="kw">list</span>(ll))
+        bin &lt;-<span class="st"> </span>bin <span class="op">+</span><span class="st"> </span>pd <span class="op">*</span><span class="st"> </span>(a <span class="op">-</span><span class="st"> </span>1L)
+        pd &lt;-<span class="st"> </span>pd <span class="op">*</span><span class="st"> </span>nl
+    }
+    <span class="kw">names</span>(dn) &lt;-<span class="st"> </span>dnn
+    bin &lt;-<span class="st"> </span>bin[<span class="op">!</span><span class="kw">is.na</span>(bin)]
+    <span class="cf">if</span> (<span class="kw">length</span>(bin)) 
+        bin &lt;-<span class="st"> </span>bin <span class="op">+</span><span class="st"> </span>1L
+    y &lt;-<span class="st"> </span><span class="kw">array</span>(<span class="kw">tabulate</span>(bin, pd), dims, <span class="dt">dimnames =</span> dn)
+    <span class="kw">class</span>(y) &lt;-<span class="st"> &quot;table&quot;</span>
+    y
+}
+
+mya&lt;-myb&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">4</span>))            <span class="co">#example</span>
+<span class="kw">my.table</span>(mya,myb)</code></pre></div>
+<pre><code>##    myb
+## mya 1 2 3 4
+##   1 2 0 0 0
+##   2 0 1 0 0
+##   3 0 0 1 0
+##   4 0 0 0 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(mya,myb)</code></pre></div>
+<pre><code>##    myb
+## mya 1 2 3 4
+##   1 2 0 0 0
+##   2 0 1 0 0
+##   3 0 0 1 0
+##   4 0 0 0 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">microbenchmark</span>(<span class="dt">t1=</span><span class="kw">my.table</span>(mya,myb),<span class="dt">t2=</span><span class="kw">table</span>(mya,myb))    </code></pre></div>
+<pre><code>## Unit: microseconds
+##  expr     min      lq     mean   median      uq     max neval
+##    t1 113.607 117.719 135.3921 124.9155 129.285 312.547   100
+##    t2 125.944 130.056 149.6778 137.2530 146.506 341.334   100</code></pre>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
